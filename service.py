@@ -6,12 +6,17 @@ import librosa
 import numpy as np
 import tensorflow as tf
 
+import service_database
+
 
 class HTTPService:
     
     def __init__(self, sess, args):
         self.sess = sess
         self.args = args
+        if args.build_index:
+            loggin.info("Building indexes...")
+            service_database.build_index(args.data_path, "lucene_index")
 
     def start(self):
         config = {
